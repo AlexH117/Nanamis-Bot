@@ -1,23 +1,48 @@
-const { Client } = require('discord.js');
-const { ChatBot } = require('discord-chatbot');
-const openai = require('openai');
-const { token, prefix, openaiApiKey } = require('./config.json');
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const config = require("./config.json");
+require('dotenv/config');
 
 const client = new Client({
-  intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES"]
+  intents: [
+    GatewayIntentBits.AutoModerationConfiguration,
+    GatewayIntentBits.AutoModerationExecution,
+    GatewayIntentBits.DirectMessageReactions,
+    GatewayIntentBits.DirectMessageTyping,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.GuildIntegrations,
+    GatewayIntentBits.GuildInvites,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildMessageTyping,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildModeration,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.GuildScheduledEvents,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildWebhooks,
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.MessageContent
+    // GatewayIntentBits.DirectMessages
+    // "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES"
+  ],
+
+  partials: [
+    Partials.Channel,
+    Partials.GuildMember,
+    Partials.GuildScheduledEvent,
+    Partials.Message,
+    Partials.Reaction,
+    Partials.ThreadMember,
+    Partials.User
+  ]
 });
 
-const chatbot = new ChatBot({ name: 'my-bot', openaiApiKey: openaiApiKey });
+
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.on('messageCreate', async message => {
-  if (!message.content.startsWith(prefix) && !message.author.bot) {
-    const response = await chatbot.generateResponse(message.content);
-    message.reply(response);
-  }
-});
+// client.on()
 
-client.login(token);
+client.login(config.token);
