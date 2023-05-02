@@ -33,21 +33,21 @@ client.on('messageCreate', async (message) => {
     message.channel.send(response);
 });
 
-async function generateResponse(prompt) {
-  try {
-    const response = await openai.complete({
-      engine: 'davinci-5',
-      prompt: prompt,
-      maxTokens: 1024,
-      n: 1,
-      stop: ['\n']
-    });
-    return response.choices[0].text.trim();
-  } catch (error) {
-    console.error('Error generating response:', error);
-    return 'Sorry, I am unable to generate a response at this time.';
-  }
-}
+// async function generateResponse(prompt) {
+//   try {
+//     const response = await openai.complete({
+//       engine: 'davinci-5',
+//       prompt: prompt,
+//       maxTokens: 1024,
+//       n: 1,
+//       stop: ['\n']
+//     });
+//     return response.choices[0].text.trim();
+//   } catch (error) {
+//     console.error('Error generating response:', error);
+//     return 'Sorry, I am unable to generate a response at this time.';
+//   }
+// }
 
 
 async function generateResponse(prompt) {
