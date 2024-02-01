@@ -53,10 +53,11 @@ client.on('messageCreate', async (message) => {
 async function generateResponse(prompt) {
     try {
         const response = await openai.createCompletion({
-            model: 'text-davinci-002',
+            model: 'text-davinci-002-5',
             prompt,
             max_tokens: 1024,
-            n: 1
+            n: 1,
+            stop: "\n",
         });
 
         return response.data.choices[0].text.trim();
